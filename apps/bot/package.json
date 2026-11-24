@@ -1,0 +1,7 @@
+{
+  "name": "@vexmor/bot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "dev": "node --watch src/index.js", "start": "node src/index.js" },
+  "dependencies": { "discord.js": "^14.17.3" }
+}
