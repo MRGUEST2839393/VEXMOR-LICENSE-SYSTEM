@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model License {
+  id          String   @id @default(cuid())
+  keyHash     String   @unique
+  keyPrefix   String
+  product     String
+  status      String   @default("active")
+  expiresAt   DateTime?
+  discordId   String?
+  hwidHash    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  activations Int      @default(0)
+  events      LicenseEvent[]
+}
+
+model LicenseEvent {
+  id        String   @id @default(cuid())
+  licenseId String
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+  license   License @relation(fields: [licenseId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+}
